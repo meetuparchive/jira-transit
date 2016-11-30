@@ -2,10 +2,10 @@ CI_BUILD_NUMBER ?= $(USER)-snapshot
 
 VERSION ?= 0.1.$(CI_BUILD_NUMBER)
 
-BUILDER_TAG=ekidd/rust-musl-builder:1.13.0
-BUILDER_DIR=/home/rust/src
-#BUILDER_TAG=clux/muslrust:1.15.0-nightly-2016-11-29
-#BUILDER_DIR=/volume
+#BUILDER_TAG=ekidd/rust-musl-builder:1.13.0
+#BUILDER_DIR=/home/rust/src
+BUILDER_TAG=clux/muslrust:1.15.0-nightly-2016-11-29
+BUILDER_DIR=/volume
 PUBLISH_TAG=meetup/jira-transit:$(VERSION)
 
 # For faster local builds, try a caching container
