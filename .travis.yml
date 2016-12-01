@@ -8,9 +8,10 @@ branches:
 services:
   - docker
 
-cache:
-  directories:
-    - $HOME/.cargo
+# fixme: read permissions issue
+#cache:
+#  directories:
+#    - $HOME/.cargo
 
 env:
   global:
