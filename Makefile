@@ -10,7 +10,7 @@ PUBLISH_TAG=meetup/jira-transit:$(VERSION)
 
 # For faster local builds, try a caching container
 # Keep a stopped container for volumes:
-#   docker run -v /home/rust/.cargo --name cargo-cache $(BUILDER_TAG) echo "running"
+#   docker run -v /volume/.cargo --name cargo-cache $(BUILDER_TAG) echo "running"
 # then
 #   export CI_CARGO_CACHE="--volumes-from cargo-cache"
 CI_CARGO_CACHE ?=
