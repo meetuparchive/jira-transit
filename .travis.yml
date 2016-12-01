@@ -19,6 +19,7 @@ before_install:
   - if [ -n "$DOCKER_LOGIN" ]; then docker login --username $DOCKER_LOGIN --password $DOCKER_PASS; fi
 
 script:
+  # https://github.com/travis-ci/travis-ci/issues/6934
   - travis_wait sleep infinity & && make $(if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then echo publish; else echo package; fi)
 
 after_success:
