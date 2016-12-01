@@ -13,6 +13,8 @@ env:
     - CI_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
 
 before_install:
+  - export CI_BUILD_NUMBER=$(if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then echo $CI_BUILD_NUMBER; else echo "${TRAVIS_BUILD_NUMBER}-SNAPSHOT"; fi)
+  - echo "CI_BUILD_NUMBER=${CI_BUILD_NUMBER}"
   - if [ -n "$DOCKER_LOGIN" ]; then docker login --email not@val.id --username $DOCKER_LOGIN --password $DOCKER_PASS; fi
 
 script:
