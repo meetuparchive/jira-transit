@@ -40,7 +40,7 @@ __package:
 		$(BUILDER_TAG) \
 		cargo build --release
 	# build service container
-	docker build -t $(PUBLISH_TAG)
+	docker build -t $(PUBLISH_TAG) .
 
 component-test:
 	@echo "Not implemented yet"

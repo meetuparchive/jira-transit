@@ -8,17 +8,23 @@ extern crate jira_transit;
 use jira_transit::Transit;
 use afterparty::Hub;
 use hyper::Server;
+use std::env;
 
 fn main() {
     env_logger::init().unwrap();
 
-    let transit = Transit {};
+    match env::var("GITHUB_SECRET") {
+       Ok(secret) => {
+           let transit = Transit {};
 
-    let mut hub = Hub::new();
-     hub.handle("*", transit);
-     let svc = Server::http("0.0.0.0:4567")
-        .unwrap()
-        .handle(hub);
-     info!("ready to go");
-     svc.unwrap();
+           let mut hub = Hub::new();
+            hub.handle_authenticated("*", secret, transit);
+            let svc = Server::http("0.0.0.0:4567")
+               .unwrap()
+               .handle(hub);
+            info!("ready to go");
+            svc.unwrap();
+       }
+       Err(error) => panic!("{:#?}", error)
+    }
 }
