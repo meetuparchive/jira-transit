@@ -8,6 +8,10 @@ branches:
 services:
   - docker
 
+cache:
+  directories:
+    - $HOME/.cargo
+
 env:
   global:
     - CI_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
