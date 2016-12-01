@@ -10,11 +10,9 @@ WIP
 
 Intended to be run as a docker app.
 
-Pick a secret, let's call it `YOUR_HOOK_SECRET` that you'll use as a means of verifing
+Pick a secret, let's call it `YOUR_HOOK_SECRET` that you'll use as a means of verifying
 the source of a hook invocation.
 
-
-`
 ```bash
 $ make package
 $ docker run --rm -it \
