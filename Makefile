@@ -45,7 +45,7 @@ __package:
 component-test:
 	@echo "Not implemented yet"
 
-package: __package test component-test
+package: __package component-test
 
 #Pushes the container to the docker registry/repository.
 publish: package
