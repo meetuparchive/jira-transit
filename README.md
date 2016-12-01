@@ -1,10 +1,8 @@
-# jira-transit [![Build Status](https://travis-ci.org/meetup/jira-transit.svg?branch=master)](https://travis-ci.org/meetup/jira-transit)
+# jira-transit [![Build Status](https://travis-ci.org/meetup/jira-transit.svg?branch=master)](https://travis-ci.org/meetup/jira-transit) https://img.shields.io/badge/project%20status-wip-yellow.svg
 
 A github webhook handler for transitioning jira issues. Listens on port 4567.
 
-## Status
-
-WIP
+This is a work in progress
 
 ## usage
 
