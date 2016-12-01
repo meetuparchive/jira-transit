@@ -25,6 +25,6 @@ fn main() {
             info!("ready to go");
             svc.unwrap();
        }
-       Err(error) => panic!("{:#?}", error)
+       _ => panic!("missing required env var GITHUB_SECRET")
     }
 }
