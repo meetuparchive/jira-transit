@@ -19,7 +19,7 @@ before_install:
   - if [ -n "$DOCKER_LOGIN" ]; then docker login --username $DOCKER_LOGIN --password $DOCKER_PASS; fi
 
 script:
-  - travis_wait $(echo make $(if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then echo publish; else echo package; fi))
+  - travis_wait sleep infinity & && make $(if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then echo publish; else echo package; fi)
 
 after_success:
   - git config --global user.email "builds@travis-ci.com"
