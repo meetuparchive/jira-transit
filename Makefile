@@ -30,7 +30,6 @@ no_op__:
 
 # Assemles the software artifact using the defined build image.
 __package:
-	docker pull $(BUILDER_TAG)
 	# build static binary
 	docker run \
 	  --rm -it \
@@ -63,7 +62,6 @@ validate:
 	@echo "Not implemented yet"
 
 test:
-	docker pull $(BUILDER_TAG)
 	docker run \
 		--rm -it \
 		-v "$(PWD)":$(BUILDER_DIR) \

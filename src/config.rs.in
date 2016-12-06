@@ -1,0 +1,8 @@
+#[derive(Deserialize, Debug, Clone)]
+pub struct Config {
+    pub github_secret: String,
+    pub github_token: String,
+    pub jira_host: String,
+    pub jira_username: String,
+    pub jira_password: String
+}
