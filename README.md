@@ -1,4 +1,4 @@
-# jira-transit [![Build Status](https://travis-ci.org/meetup/jira-transit.svg?branch=master)](https://travis-ci.org/meetup/jira-transit) ![build status](https://img.shields.io/badge/project%20status-wip-yellow.svg)
+# jira-transit [![Build Status](https://travis-ci.org/meetup/jira-transit.svg?branch=master)](https://travis-ci.org/meetup/jira-transit) ![build status](https://img.shields.io/badge/project%20status-wip-yellow.svg) ![](https://img.shields.io/github/tag/meetup/jira-transit.svg)
 
 A github webhook handler for transitioning jira issues. Listens on port 4567.
 
@@ -30,5 +30,10 @@ To configure this server you'll want to create a new webhook integration
 5) Set your secret to the one you've chosen above
 6) Select event's your server should be notified about
 
+Note:
+
+This docker image is based on `scatch` which doesn't contain ssl required
+information about trusted authorizes. A `ca-certificates.crt` is bundled directly
+which is sourced from
 
 Meetup 2016
