@@ -21,11 +21,13 @@ pub use jira::{DefaultJira, Jira};
 pub use config::Config;
 pub use parse::Directive;
 
+/// a pull is a reference to a github pull requset for a given repo
 pub struct Pull {
     pub number: u64,
     pub repo_slug: String,
 }
 
+/// the primary orchestator for handling github webhooks
 pub struct Transit {
     github: Box<Github>,
     jira: Box<Jira>,
@@ -39,6 +41,7 @@ impl Transit {
         }
     }
 
+    /// process a pull request
     pub fn process(&self, pull: Pull) {
         let directives = self.github.pull_directives(pull);
         self.jira.transition(directives)
@@ -49,8 +52,9 @@ impl Hook for Transit {
     fn handle(&self, delivery: &Delivery) {
         info!("recv {} delivery {}", delivery.event, delivery.id);
         match delivery.payload {
+            /// handle all merged pull request events 
             Event::PullRequest { ref action, ref pull_request, ref repository, .. }
-                if action == "merged" && pull_request.merged => {
+                if action == "closed" && pull_request.merged => {
                 self.process(Pull {
                     number: pull_request.number,
                     repo_slug: repository.full_name.clone(),

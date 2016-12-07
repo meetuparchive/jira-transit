@@ -14,10 +14,12 @@ fn main() {
     env_logger::init().unwrap();
     match envy::from_env::<Config>() {
         Ok(config) => {
+
             let github_secret = config.github_secret.clone();
             let github = DefaultGithub::new(hyper::Client::new(), config.clone());
             let jira = DefaultJira::new(hyper::Client::new(), config.clone());
             let transit = Transit::new(Box::new(github), Box::new(jira));
+
             let mut hub = Hub::new();
             hub.handle_authenticated("*", github_secret, transit);
             let svc = Server::http("0.0.0.0:4567")

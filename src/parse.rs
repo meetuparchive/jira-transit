@@ -2,9 +2,11 @@ extern crate regex;
 
 use regex::Regex;
 
+/// keywords to look for in pull request content
 const KEYWORDS: &'static [&'static str] = &["closes", "closed", "fix", "fixes", "fixed",
                                             "resolve", "resolves", "resolved"];
 
+/// a keyword action assocatied with a jira key
 #[derive(Debug, PartialEq)]
 pub struct Directive {
     pub action: String,
@@ -23,7 +25,9 @@ impl Directive {
     }
 }
 
-// https://help.github.com/articles/closing-issues-via-commit-messages/
+/// parses a vector of directives from a corpus of text
+/// https://help.github.com/articles/closing-issues-via-commit-messages/
+/// https://confluence.atlassian.com/bitbucket/processing-jira-software-issues-with-smart-commit-messages-298979931.html#ProcessingJIRASoftwareissueswithSmartCommitmessages-Notes
 pub fn directives<T>(txt: T) -> Vec<Directive>
     where T: Into<String>
 {

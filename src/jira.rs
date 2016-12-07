@@ -3,7 +3,9 @@ extern crate hyper;
 
 use super::{Config, Directive};
 
+/// interface for fetching transitioning jira issues
 pub trait Jira: Sync + Send {
+    /// transition a list of issues
     fn transition(&self, directives: Vec<Directive>);
 }
 

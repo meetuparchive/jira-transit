@@ -6,6 +6,7 @@ use super::parse;
 
 /// interface for fetching pull request information
 pub trait Github: Sync + Send {
+    /// get a list of directives associated with a given pull
     fn pull_directives(&self, pull: Pull) -> Vec<Directive>;
 }
 
