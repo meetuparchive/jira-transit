@@ -4,7 +4,7 @@ extern crate hyper;
 use super::{Config, Directive};
 use goji::{TransitionOption, TransitionTriggerOptions};
 
-/// interface for fetching transitioning jira issues
+/// interface for transitioning jira issues
 pub trait Jira: Sync + Send {
     /// transition a list of issues
     fn transition(&self, directives: Vec<Directive>);
@@ -14,9 +14,9 @@ pub trait Jira: Sync + Send {
                option: TransitionOption)
                -> Option<TransitionTriggerOptions> {
         // exercise for reader...
-        // check option.name agains directive.action
+        // check option.name against directive.action.
         // use option.id to create TransitionTriggerOptions
-        // Some(TransitionTriggerOptions::builder(option.id).resolution("Done").build())
+        //    Some(TransitionTriggerOptions::builder(option.id).resolution("Done").build())
         // for example
         None
     }

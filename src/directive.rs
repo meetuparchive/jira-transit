@@ -6,7 +6,7 @@ use regex::Regex;
 const KEYWORDS: &'static [&'static str] = &["closes", "closed", "fix", "fixes", "fixed",
                                             "resolve", "resolves", "resolved"];
 
-/// a keyword action assocatied with a jira key
+/// a keyword action associated with a jira key
 #[derive(Debug, PartialEq, Clone)]
 pub struct Directive {
     pub action: String,

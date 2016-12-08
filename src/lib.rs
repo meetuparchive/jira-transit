@@ -25,12 +25,12 @@ use std::sync::mpsc::{channel, Sender};
 use std::thread;
 use std::sync::{Arc, Mutex};
 
-/// a pull is a reference to a github pull requset for a given repo
+/// a pull is a reference to a github pull request for a given repo
 #[derive(Debug)]
 pub struct Pull {
     /// number of pull request
     pub number: u64,
-    /// / repo slug in owner/repo format
+    /// repo slug in owner/repo format
     pub repo_slug: String,
 }
 
@@ -99,7 +99,7 @@ impl Hook for Transit {
                     repository.full_name.clone(),
                 ));
             }
-            _ => (), // other events
+            _ => (), // pass on all other wehbook events
         }
     }
 }
