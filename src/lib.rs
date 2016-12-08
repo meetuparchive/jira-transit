@@ -13,17 +13,19 @@ use afterparty::{Delivery, Event, Hook};
 mod config;
 mod github;
 mod jira;
-mod parse;
+mod directive;
 
 // re-exports
 pub use github::{DefaultGithub, Github};
 pub use jira::{DefaultJira, Jira};
 pub use config::Config;
-pub use parse::Directive;
+pub use directive::Directive;
 
 /// a pull is a reference to a github pull requset for a given repo
 pub struct Pull {
+    /// number of pull request
     pub number: u64,
+    /// / repo slug in owner/repo format
     pub repo_slug: String,
 }
 
@@ -43,8 +45,20 @@ impl Transit {
 
     /// process a pull request
     pub fn process(&self, pull: Pull) {
-        let directives = self.github.pull_directives(pull);
-        self.jira.transition(directives)
+        let github::Content { commits, comments } = self.github.content(pull);
+        let commit_directives = commits.iter().fold(vec![], |mut result, commit| {
+            for d in directive::parse(commit.as_ref()) {
+                result.push(d)
+            }
+            result
+        });
+        let combined_directives = comments.iter().fold(commit_directives, |mut result, comment| {
+            for d in directive::parse(comment.as_ref()) {
+                result.push(d)
+            }
+            result
+        });
+        self.jira.transition(combined_directives)
     }
 }
 
@@ -52,7 +66,7 @@ impl Hook for Transit {
     fn handle(&self, delivery: &Delivery) {
         info!("recv {} delivery {}", delivery.event, delivery.id);
         match delivery.payload {
-            /// handle all merged pull request events 
+            /// handle all merged pull request events
             Event::PullRequest { ref action, ref pull_request, ref repository, .. }
                 if action == "closed" && pull_request.merged => {
                 self.process(Pull {

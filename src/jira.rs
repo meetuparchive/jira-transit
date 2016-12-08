@@ -2,11 +2,24 @@ extern crate goji;
 extern crate hyper;
 
 use super::{Config, Directive};
+use goji::{TransitionOption, TransitionTriggerOptions};
 
 /// interface for fetching transitioning jira issues
 pub trait Jira: Sync + Send {
     /// transition a list of issues
     fn transition(&self, directives: Vec<Directive>);
+    /// returns Some trigger options for a matching directive
+    fn trigger(&self,
+               directive: Directive,
+               option: TransitionOption)
+               -> Option<TransitionTriggerOptions> {
+        // exercise for reader...
+        // check option.name agains directive.action
+        // use option.id to create TransitionTriggerOptions
+        // Some(TransitionTriggerOptions::builder(option.id).resolution("Done").build())
+        // for example
+        None
+    }
 }
 
 pub struct DefaultJira {
@@ -30,8 +43,25 @@ impl Jira for DefaultJira {
                                                             self.config.jira_password.clone()),
                                    &self.client);
         for d in directives {
-            for option in jira.transitions(d.key).list() {
-                println!("can transition via {:#?}", option);
+            match jira.transitions(d.key.clone()).list() {
+                Ok(options) => {
+                    for option in options {
+                        debug!("{} can transition to {} ({})",
+                               d.key,
+                               option.name,
+                               option.id);
+                        if let Some(trigger) = self.trigger(d.clone(), option) {
+                            match jira.transitions(d.key.clone()).trigger(trigger) {
+                                Ok(_) => info!("transitioned issue {}", d.key),
+                                Err(err) => {
+                                    error!("error transitioning issue {}, {:#?}", d.key, err)
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                Err(err) => error!("jira error {:#?}", err),
             }
         }
     }

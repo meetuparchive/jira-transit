@@ -16,6 +16,10 @@ $ make package
 $ docker run --rm -it \
    -e RUST_LOG=info \
    -e GITHUB_SECRET=YOUR_HOOK_SECRET \
+   -e GITHUB_TOKEN=GITHUB_OAUTH_ACCESS_TOKEN \
+   -e JIRA_HOST=YOUR_JIRA_HOST \
+   -e JIRA_USERNAME=YOUR_JIRA_BOT_USERNAME \
+   -e JIRA_PASSWORD=YOUR_JIRA_BOT_PASSWORD \
    -e SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt \
    -e SSL_CERT_DIR=/etc/ssl/certs \
    meetup/jira-transit:0.1.{tag}
