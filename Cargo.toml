@@ -2,9 +2,20 @@
 name = "jira-transit"
 version = "0.1.0"
 authors = ["softprops <d.tangren@gmail.com>"]
+build = "build.rs"
+
+[build-dependencies]
+serde_codegen = "0.8"
 
 [dependencies]
 afterparty = "0.1"
 env_logger = "0.3"
+envy = "0.1"
 hyper = "0.9"
+lazy_static = "0.2"
 log = "0.3"
+hubcaps = "0.2"
+goji = "0.1"
+regex = "0.1"
+serde = "0.8"
+serde_json = "0.8"
