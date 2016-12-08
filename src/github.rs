@@ -16,10 +16,12 @@ pub trait Github: Sync + Send {
     fn content(&self, pull: Pull) -> Content;
 }
 
+
 pub struct DefaultGithub {
     client: hyper::Client,
     config: Config,
 }
+
 
 impl DefaultGithub {
     pub fn new(client: hyper::Client, config: Config) -> DefaultGithub {

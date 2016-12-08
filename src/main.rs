@@ -15,6 +15,8 @@ fn run(config: Config) {
     let github = DefaultGithub::new(hyper::Client::new(), config.clone());
     let jira = DefaultJira::new(hyper::Client::new(), config.clone());
     let transit = Transit::new(Box::new(github), Box::new(jira));
+
+    // wire up wehbook registrations
     let mut hub = Hub::new();
     // register interest in _all_ github events
     hub.handle_authenticated("*", github_secret, transit);
