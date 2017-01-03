@@ -4,6 +4,13 @@ extern crate hyper;
 use super::{Config, Directive};
 use goji::{TransitionOption, TransitionTriggerOptions};
 
+fn trigger(config: Config,
+           directive: Directive,
+           option: TransitionOption)
+           -> Option<TransitionTriggerOptions> {
+    None
+}
+
 /// interface for transitioning jira issues
 pub trait Jira: Sync + Send {
     /// transition a list of issues
@@ -18,6 +25,7 @@ pub trait Jira: Sync + Send {
         // use option.id to create TransitionTriggerOptions
         //    Some(TransitionTriggerOptions::builder(option.id).resolution("Done").build())
         // for example
+
         None
     }
 }
@@ -64,5 +72,28 @@ impl Jira for DefaultJira {
                 Err(err) => error!("jira error {:#?}", err),
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::trigger;
+    use super::super::{Config, Directive};
+    use goji::{TransitionOption, TransitionTriggerOptions};
+
+    #[test]
+    fn it_matches_transition_from_config() {
+        // Setup a config
+        // Make some transition options
+        // Match an appropriate trigger options
+        let transition_name = "To Closed";
+        Config {
+            github_secret: "".to_owned(),
+            github_token: "".to_owned(),
+            jira_host: "".to_owned(),
+            jira_username: "".to_owned(),
+            jira_password: "".to_owned(),
+            transition: transition_name.to_owned(),
+        };
     }
 }

@@ -7,5 +7,6 @@ pub struct Config {
     pub github_token: String,
     pub jira_host: String,
     pub jira_username: String,
-    pub jira_password: String
+    pub jira_password: String,
+    pub transition: String
 }

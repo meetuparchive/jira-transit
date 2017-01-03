@@ -27,7 +27,9 @@ impl Directive {
 
 /// parses a vector of directives from a corpus of text
 /// https://help.github.com/articles/closing-issues-via-commit-messages/
-/// https://confluence.atlassian.com/bitbucket/processing-jira-software-issues-with-smart-commit-messages-298979931.html#ProcessingJIRASoftwareissueswithSmartCommitmessages-Notes
+/// https://confluence.atlassian.com/bitbucket/
+/// processing-jira-software-issues-with-smart-commit-messages-298979931.html
+/// #ProcessingJIRASoftwareissueswithSmartCommitmessages-Notes
 pub fn parse<T>(txt: T) -> Vec<Directive>
     where T: Into<String>
 {
@@ -61,21 +63,21 @@ mod tests {
     #[test]
     fn it_parses_directive() {
         for kw in KEYWORDS {
-            assert_eq!(directives(format!("{} #AB-123", *kw)),
+            assert_eq!(parse(format!("{} #AB-123", *kw)),
                        vec![Directive::new(*kw, "AB-123")])
         }
     }
 
     #[test]
     fn it_parses_multiple_directives() {
-        assert_eq!(directives("closes #AB-123 fixes #CDF-456"),
+        assert_eq!(parse("closes #AB-123 fixes #CDF-456"),
                    vec![Directive::new("closes", "AB-123"), Directive::new("fixes", "CDF-456")])
     }
 
     #[test]
     fn it_does_not_parse_directives_with_lower_case_keys() {
         for kw in KEYWORDS {
-            assert_eq!(directives(format!("{} #an-123", *kw)), vec![])
+            assert_eq!(parse(format!("{} #an-123", *kw)), vec![])
         }
     }
 }

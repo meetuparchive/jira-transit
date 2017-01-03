@@ -35,10 +35,12 @@ pub struct Pull {
 }
 
 impl Pull {
-    pub fn new<R>(num: u64, repo: R) -> Pull where R: Into<String> {
+    pub fn new<R>(num: u64, repo: R) -> Pull
+        where R: Into<String>
+    {
         Pull {
             number: num,
-            repo_slug: repo.into()
+            repo_slug: repo.into(),
         }
     }
 }
@@ -93,11 +95,12 @@ impl Hook for Transit {
             /// handle all merged pull request events
             Event::PullRequest { ref action, ref pull_request, ref repository, .. }
                 if action == "closed" && pull_request.merged => {
+                // TODO to common branch
                 // enqueue work
-                let _ = self.sender.lock().unwrap().send(Pull::new(
-                    pull_request.number,
-                    repository.full_name.clone(),
-                ));
+                let _ = self.sender
+                    .lock()
+                    .unwrap()
+                    .send(Pull::new(pull_request.number, repository.full_name.clone()));
             }
             _ => (), // pass on all other wehbook events
         }
