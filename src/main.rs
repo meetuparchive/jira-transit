@@ -19,7 +19,7 @@ fn run(config: Config) {
     // wire up wehbook registrations
     let mut hub = Hub::new();
     // register interest in _all_ github events
-    hub.handle_authenticated("*", github_secret, transit);
+    hub.handle_authenticated("pull_request", github_secret, transit);
     let svc = Server::http("0.0.0.0:4567")
         .unwrap()
         .handle(hub);
