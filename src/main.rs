@@ -10,7 +10,6 @@ extern crate chan;
 extern crate chan_signal;
 
 use chan_signal::Signal;
-use std::process::exit;
 use afterparty::Hub;
 use hyper::Server;
 use jira_transit::{Config, DefaultGithub, DefaultJira, Transit};
