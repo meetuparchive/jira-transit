@@ -8,7 +8,7 @@ build = "build.rs"
 serde_codegen = "0.8"
 
 [dependencies]
-afterparty = { git = "https://github.com/softprops/afterparty", rev = "44b6ea8" }
+afterparty = { git = "https://github.com/softprops/afterparty", branch = "handcrafted_events" }
 env_logger = "0.3"
 envy = "0.1"
 hyper = "0.9"
