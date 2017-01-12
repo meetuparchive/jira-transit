@@ -26,7 +26,7 @@ use std::thread;
 use std::sync::{Arc, Mutex};
 
 /// a pull is a reference to a github pull request for a given repo
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Pull {
     /// number of pull request
     pub number: u64,
@@ -68,8 +68,8 @@ impl Transit {
 
     /// process a pull request
     fn merged(pull: Pull, github: &Box<Github>, jira: &Box<Jira>) {
-        println!("debug {:#?}", pull);
-        let github::Content { commits, comments } = github.content(pull);
+        println!("debug {:?}", pull);
+        let github::Content { commits, comments } = github.content(pull.clone());
         // parse directives
         let commit_directives = commits.iter().fold(vec![], |mut result, commit| {
             for d in directive::parse(commit.as_ref()) {
@@ -83,6 +83,10 @@ impl Transit {
             }
             result
         });
+        debug!("directives for pr {} in repo {} {:?}",
+               pull.number,
+               pull.repo_slug,
+               combined_directives);
         // attempt transition
         jira.transition(combined_directives)
     }

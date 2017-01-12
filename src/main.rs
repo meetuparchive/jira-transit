@@ -48,7 +48,7 @@ fn main() {
                     println!("Program completed normally.")
                 }
             }
-        },
+        }
         Err(envy::Error::MissingValue(field)) => {
             panic!("missing required env var {}",
                    field.to_owned().to_uppercase())

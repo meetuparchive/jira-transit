@@ -5,9 +5,7 @@ use super::{Config, Directive};
 use goji::{TransitionOption, TransitionTriggerOptions};
 
 /// returns Some trigger options for a matching directive
-fn trigger(config: Config,
-           option: &TransitionOption)
-           -> Option<TransitionTriggerOptions> {
+fn trigger(config: Config, option: &TransitionOption) -> Option<TransitionTriggerOptions> {
     if config.transition == option.name {
         Some(TransitionTriggerOptions::new(option.id.clone()))
     } else {
@@ -69,7 +67,7 @@ impl Jira for DefaultJira {
 #[cfg(test)]
 mod tests {
     use super::trigger;
-    use super::super::{Config};
+    use super::super::Config;
     use goji::{TransitionTo, TransitionOption};
 
     #[test]
@@ -78,44 +76,36 @@ mod tests {
         // Make some transition options
         // Match an appropriate trigger options
         let transition_name = "To QA";
-        let config = Config {
-            transition: transition_name.to_owned(),
-            ..Default::default()
-        };
+        let config = Config { transition: transition_name.to_owned(), ..Default::default() };
         let transition_option = TransitionOption {
             id: "781".to_string(),
             name: "To QA".to_string(),
             to: TransitionTo {
                 name: "test name".to_string(),
-                id: "123".to_string()
-            }
+                id: "123".to_string(),
+            },
         };
 
-        assert_eq!(trigger(config,
-                &transition_option).map(|trigger_options| {
-                    trigger_options.transition.id
-                }), Some(transition_option.id))
+        assert_eq!(trigger(config, &transition_option)
+                       .map(|trigger_options| trigger_options.transition.id),
+                   Some(transition_option.id))
     }
 
     #[test]
     fn it_doesnt_match_transition_from_config() {
         let transition_name = "To Space";
-        let config = Config {
-            transition: transition_name.to_owned(),
-            ..Default::default()
-        };
+        let config = Config { transition: transition_name.to_owned(), ..Default::default() };
         let transition_option = TransitionOption {
             id: "781".to_string(),
             name: "To QA".to_string(),
             to: TransitionTo {
                 name: "test name".to_string(),
-                id: "234".to_string()
-            }
+                id: "234".to_string(),
+            },
         };
 
-        assert_eq!(trigger(config,
-            &transition_option).map(|trigger_options| {
-                trigger_options.transition.id
-            }), None)
+        assert_eq!(trigger(config, &transition_option)
+                       .map(|trigger_options| trigger_options.transition.id),
+                   None)
     }
 }
