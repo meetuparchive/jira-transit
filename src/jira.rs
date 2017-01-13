@@ -40,13 +40,14 @@ impl Jira for DefaultJira {
                                                             self.config.jira_password.clone()),
                                    &self.client);
         for d in directives {
+            info!("fetching transitions for jira issue {}", d.key);
             match jira.transitions(d.key.clone()).list() {
                 Ok(options) => {
                     for option in options {
-                        debug!("{} can transition to {} ({})",
-                               d.key,
-                               option.name,
-                               option.id);
+                        info!("{} can transition to {} ({})",
+                              d.key,
+                              option.name,
+                              option.id);
                         if let Some(trigger) = trigger(self.config.clone(), &option) {
                             match jira.transitions(d.key.clone()).trigger(trigger) {
                                 Ok(_) => info!("transitioned issue {}", d.key),

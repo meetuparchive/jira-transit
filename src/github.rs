@@ -56,6 +56,11 @@ impl Github for DefaultGithub {
             Ok(iter) => iter.collect::<Vec<_>>(),
             _ => vec![],
         };
+        debug!("fetched {} comments and {} commits for pull {} in repo {}",
+               comments.len(),
+               commits.len(),
+               pull.number,
+               pull.repo_slug);
         Content {
             commits: commits.iter()
                 .map(|commit| commit.commit.message.clone())

@@ -68,7 +68,7 @@ impl Transit {
 
     /// process a pull request
     fn merged(pull: Pull, github: &Box<Github>, jira: &Box<Jira>) {
-        println!("debug {:?}", pull);
+        info!("pull {:?}", pull);
         let github::Content { commits, comments } = github.content(pull.clone());
         // parse directives
         let commit_directives = commits.iter().fold(vec![], |mut result, commit| {
@@ -83,10 +83,10 @@ impl Transit {
             }
             result
         });
-        debug!("directives for pr {} in repo {} {:?}",
-               pull.number,
-               pull.repo_slug,
-               combined_directives);
+        info!("directives for pr {} in repo {} {:?}",
+              pull.number,
+              pull.repo_slug,
+              combined_directives);
         // attempt transition
         jira.transition(combined_directives)
     }
