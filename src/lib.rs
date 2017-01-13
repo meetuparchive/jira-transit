@@ -66,29 +66,34 @@ impl Transit {
         Transit { sender: Arc::new(Mutex::new(tx)) }
     }
 
-    /// process a pull request
-    fn merged(pull: Pull, github: &Box<Github>, jira: &Box<Jira>) {
-        info!("pull {:?}", pull);
-        let github::Content { commits, comments } = github.content(pull.clone());
-        // parse directives
+    pub fn parse_content(content: github::Content) -> Vec<Directive> {
+        let github::Content { commits, comments } = content;
         let commit_directives = commits.iter().fold(vec![], |mut result, commit| {
             for d in directive::parse(commit.as_ref()) {
                 result.push(d)
             }
             result
         });
-        let combined_directives = comments.iter().fold(commit_directives, |mut result, comment| {
+        comments.iter().fold(commit_directives, |mut result, comment| {
             for d in directive::parse(comment.as_ref()) {
                 result.push(d)
             }
             result
-        });
+        })
+    }
+
+    /// process a pull request
+    fn merged(pull: Pull, github: &Box<Github>, jira: &Box<Jira>) {
+        info!("pull {:?}", pull);
+        let content = github.content(pull.clone());
+        // parse directives
+        let directives = Self::parse_content(content);
         info!("directives for pr {} in repo {} {:?}",
               pull.number,
               pull.repo_slug,
-              combined_directives);
+              directives);
         // attempt transition
-        jira.transition(combined_directives)
+        jira.transition(directives)
     }
 }
 
