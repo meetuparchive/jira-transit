@@ -41,4 +41,3 @@ information about trusted authorizes. A `ca-certificates.crt` is bundled directl
 which is sourced from
 
 Meetup 2016
-.
