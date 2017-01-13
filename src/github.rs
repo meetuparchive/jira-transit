@@ -45,8 +45,10 @@ impl Github for DefaultGithub {
             .pulls()
             .get(pull.number)
             .comments()
-            .list(&Default::default())
-            .unwrap_or(vec![]);
+            .list(&Default::default()).or_else(|e| {
+                error!("error fetching comments for pull {}: {}", pull.number, e);
+                Err(e)
+            }).unwrap_or(Vec::new());
         // fetch all commits
         let commits = match gh.repo(repo_uri[0], repo_uri[1])
             .pulls()
@@ -54,7 +56,7 @@ impl Github for DefaultGithub {
             .commits()
             .iter() {
             Ok(iter) => iter.collect::<Vec<_>>(),
-            _ => vec![],
+            _ => Vec::new(),
         };
         info!("fetched {} comments and {} commits for pull {} in repo {}",
                comments.len(),
