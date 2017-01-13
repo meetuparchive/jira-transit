@@ -1,10 +1,12 @@
 extern crate jira_transit;
 extern crate hyper;
+extern crate env_logger;
 
 use jira_transit::{Config, DefaultGithub, Github, Pull, Transit};
 use std::env;
 
 fn main() {
+    env_logger::init().unwrap();
     match (env::var("GH_TOKEN"), env::var("GH_REPO"), env::var("GH_PULL")) {
         (Ok(token), Ok(repo), Ok(pr)) => {
             let gh = DefaultGithub::new(hyper::Client::new(), Config {
