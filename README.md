@@ -1,6 +1,6 @@
 # jira-transit [![Build Status](https://travis-ci.org/meetup/jira-transit.svg?branch=master)](https://travis-ci.org/meetup/jira-transit) ![build status](https://img.shields.io/badge/project%20status-wip-yellow.svg) ![](https://img.shields.io/github/tag/meetup/jira-transit.svg)
 
-A github webhook handler for transitioning jira issues. Listens on port 4567.
+A Github webhook handler for transitioning Jira issues. Listens on port 4567.
 
 This is a work in progress.
 
