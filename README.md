@@ -25,7 +25,8 @@ $ docker run --rm -it \
    meetup/jira-transit:0.1.{tag}
 ```
 
-To configure this server you'll want to create a new webhook integration
+To configure this server you'll want to create a new webhook integration using
+the following steps
 
 1) Visit `https://github.com/{owner}/{repo}/settings`
 2) Select "Webhooks" tab
