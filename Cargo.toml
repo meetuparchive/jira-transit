@@ -3,6 +3,7 @@ name = "jira-transit"
 version = "0.1.0"
 authors = ["softprops <d.tangren@gmail.com>"]
 build = "build.rs"
+keywords = ["jira", "github"]
 
 [build-dependencies]
 serde_codegen = "0.8"
