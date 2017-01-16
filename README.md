@@ -26,7 +26,7 @@ $ docker run --rm -it \
 ```
 
 To configure this server you'll want to create a new webhook integration using
-the following steps
+the following steps.
 
 1) Visit `https://github.com/{owner}/{repo}/settings`
 2) Select "Webhooks" tab
