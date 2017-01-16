@@ -41,4 +41,4 @@ This docker image is based on `scatch` which doesn't contain ssl required
 information about trusted authorizes. A `ca-certificates.crt` is bundled directly
 which is sourced from
 
-Meetup 2016
+Meetup 2016.
